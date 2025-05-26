@@ -1,19 +1,31 @@
 class Heap {
 constructor(arr) {
 this.arr = arr;
+this.heapfy();
 }
-heapy() {
-for (let i = Math.floor((this.arr.length - 2) / 2); i >= 0; i--) {
-sink(this.arr, i);
+heapfy() {
+let len = this.arr.length - 1;
+for (let i = Math.floor((len - 1) / 2); i >= 0; i--) {
+this.sink(this.arr, i);
 }
+}
+sort() {
+let resultArr = [];
+for (let i = this.arr.length - 1; i > 0; i--) {
+[this.arr[0], this.arr[i]] = [this.arr[i], this.arr[0]];
+resultArr.push(this.arr.pop());
+this.heapfy();
+}
+resultArr.push(this.arr.pop());
+this.arr = resultArr;
 }
 sink(arr, i) {
 //当左孩子节点的索引合规
 while (2 _ i + 1 < arr.length) {
 //初始将最大孩子指针指向左孩子
-let j = i + 1;
+let j = 2 _ i + 1;
 //如果当前节点的左孩子节点比右孩子更大，最大孩子指针指向右孩子
-if (2 _ j + 1 < arr.length && arr[j] < arr[j + 1]) {
+if (j + 1 < arr.length && arr[j] < arr[j + 1]) {
 j++;
 }
 //当前节点的左右孩子<=当前节点时，停止下沉
@@ -23,6 +35,21 @@ i = j;
 }
 }
 insert(val) {
-let i=this.arr.l
+this.arr.push(val);
+let j = this.arr.length - 1;
+while (j > 0) {
+let i = Math.floor((j - 1) / 2);
+if (this.arr[i] >= this.arr[j]) {
+break;
+}
+[this.arr[i], this.arr[j]] = [this.arr[j], this.arr[i]];
+j = i;
+}
+}
+delete() {
+let len = this.arr.length;
+[this.arr[0], this.arr[len - 1]] = [this.arr[len - 1], this.arr[0]];
+this.arr.pop();
+this.sink(this.arr, 0);
 }
 }
