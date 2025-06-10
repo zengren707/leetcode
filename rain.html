@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    let canvas = document.getElementById("canvas");
+    canvas.width = screen.availWidth;
+    canvas.height = screen.availHeight;
+    const ctx = canvas.getContext("2d");
+    const textArr = "zrisgoodboy".split("");
+    const positionArr = Array(screen.availWidth / 10).fill(0);
+    setInterval(() => {
+      rain();
+    }, 30);
+
+    function rain() {
+      ctx.fillStyle = "rgba(0,0,0,.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0f0";
+      positionArr.forEach((value, index) => {
+        const widthPosition = Math.floor(Math.random() * textArr.length);
+        ctx.fillText(textArr[widthPosition], index * 10, value + 10);
+        positionArr[index] =
+          value >= canvas.height || value >= canvas.height * 4 * Math.random()
+            ? 0
+            : value + 10;
+      });
+    }
+  </script>
+</html>
